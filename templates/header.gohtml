@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="viewport" content="height=device-height, initial-scale=1.0" />
+		<link rel="stylesheet" type="text/css" href="/SongsBook/files/style.css" />
+		<script src="/SongsBook/files/mainScript.js" charset="utf-8"></script>
+</head>
+
+<div id="menu">
+	<button id="listBTN">PLAY LISTS</button>
+	<button id="foldMenuBTN" onclick="foldMenu(false)"><img src="/SongsBook/files/img/menu.png"/></button>
+	<ul id="menuList">
+		<li onclick="newSongFormToogle()">New song</li>
+		<!-- class="chordsON" class="foldPar" -->
+		<li id="chordsOnBTN">Chords ON</li>
+		<li id="foldParBTN">Par fold</li>
+	</ul>
+</div>
+<body>
+
+	<div id="transparentPage"></div>
+
+	<form action="SongsBook/suggestNS" method="POST" id="suggestNS">
+		<button type="button" onclick="newSongFormToogle()">X</button>
+		<div> SUGGEST A NEW SONG </div>
+		<input type="text" name="newSong" id="newSong" placeholder="New song name"  />
+		<input type="submit" id="suggestBTN" />
+	</form>

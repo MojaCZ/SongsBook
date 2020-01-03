@@ -1,0 +1,102 @@
+00001>1. Signální>00001>G>>>
+00002>Amerika>00001>G>>>
+00003>Andulko Šafářová>00001>G>>>
+00004>Boleslav Boleslav>00001>D>>>
+00005>Buráky>00001>D>>4>
+00006>Čerešničky>00001>G>>>
+00007>Červená řeka>00001>D>>4>
+00008>Cesta>00001>A>2>>
+00009>Chci zas v tobě spát>00001>>>>
+00010>Čmelák>00001>C>>>
+00011>Co jste hasiči>00001>C>>>
+00012>Dál jen se směj>00001>G>>>
+00013>Dej mi víc své lásky>00001>G>>>
+00014>Dětské šaty>00001>G>>>
+00015>Dirty Paws>00002>>5>>
+00016>Dívka s perlami ve vlasech>00001>>>>
+00017>Dobrák od kosti>00001>E>2>>
+00018>Don't Worry Be Happy>00002>C>>>
+00019>Dvě spálený srdce>00001>C>>>
+00020>Ej, padá, padá rosička>00001>G>>>
+00021>Gastrosexuál>00001>>2>>
+00022>Here Comes The Sun>00002>>7>>
+00023>Hey Brother>00002>G#>1>>
+00024>Hey Jude>00002>D>>>
+00025>Hey Soul Sister>00002>A>>>
+00026>Hurt>00002>C>>>
+00027>I cesta může být cíl>00001>F>>>
+00028>I'm Yours>00002>>>>
+00029>Imagine>00002>C>>>
+00030>Just the Way You Are>00002>A>>>
+00031>Kluziště>00001>G>>>
+00032>Knee Deep>00002>>3>>
+00033>Knockin' on Heavens Door>00002>G>>>
+00034>Kohout>00001>A>>>
+00035>Kutil>00001>C>>>
+00036>Leaving On A Jetplane>00002>E>4>>
+00037>Let It Be>00002>C>>>
+00038>Marnivá sestřenice>00001>>>>
+00039>Marry You>00002>D>2>>
+00040>Medvídek>00001>D>>>
+00041>Měsíc>00001>G>>>
+00042>Místečko>00001>C>>>
+00043>Modrá>00001>G>>>
+00044>Myslím na Colorado>00001>A>2>>
+00045>Na Ptáky jsme krátcí>00001>>>>
+00046>Nad stádem koní>00001>D>>>
+00047>Nemelem nemelem>00001>G>>>
+00048>Norwegain Wood>00002>A>2>>
+00049>Ostrava černá>00001>D>>>
+00050>Panenka>00001>D>>>
+00051>Panic>00001>A>>>
+00052>Pár minut>00001>G>>>
+00053>Pažitka>00001>A>>>
+00054>Pramínek vlasů>00001>>>>
+00055>Ráda se miluje>00001>C>>>
+00056>Rodné údolí>00001>D>>>
+00057>Rome Wasn't build in a Day>00002>C#>>>
+00058>Sametová>00001>G>>>
+00059>Sladké je žít>00001>A>>>
+00060>Society>00002>D>2>>
+00061>Špejchar blues>00001>>3>>
+00062>Sweet Home Alabama>00002>G>>>
+00063>Tenessee Waltz>00001>C>>>
+00064>The Sound Of Silence>00002>D>2>>
+00065>Tisíc mil>00001>G>>>
+00066>Tvá máma ví>00001>G>>>
+00067>Twist and Shout>00002>G>5>>
+00068>V širém poli studánečka>00001>G>>>
+00069>Vinaři>00001>>2>>
+00070>Vincent>00002>>>>
+00071>Wagon Wheel>00002>G>>>
+00072>Wayfaring Stranger>00002>>>>
+00073>What's Up>00002>>>>
+00074>When I Was Your Man>00002>F>>>
+00075>Zafúkané>00001>>5>>
+00076>Sbohem Angelino>00001>G>>>
+00077>Dej mi tón>00001>G>>>
+00078>Pojďme se napít>00001>D>>>
+00079>Divokej horskej tymián>00001>D>>>
+00080>Škoda lásky>00001>GC>>>
+00081>Vysoký jalovec>00001>C>>>
+00082>Šly panenky silnicí>00001>C>>>
+00083>Nemelem Nemelem>00001>E>>>
+00084>Na Pankráci>00001>C>>>
+00085>V širém poli>00001>G>>>
+00086>Na rozloučení>00001>G>>>
+00087>Kdyby tady byla>00001>D>>>
+00088>Na tu svatů Katerinu>00001>D>>>
+00089>Fotbal>00001>C>>>
+00090>Ostravo, Ostravo>00001>C>>>
+00091>Když mě brali za vojáka>00001>F>>>
+00092>Outsider waltz>00001>C>>>
+00093>Královna z Dundrum Bay>00001>G>>>
+00094>Prodavač slonů>00001>Am>>>
+00095>Vstávej holka>00001>Am>2>>
+00096>Víla>00001>D>2>>
+00097>Námořnická>00001>D>>>
+00098>Vosa>00001>G>>>
+00099>Diga diga do>00001>>>>
+00100>Já s tebou žít nebudu>00001>C>>>
+00101>Král a klaun>00001>D>6>>
+00102>Růže z papíru>00001>>>>

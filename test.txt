@@ -1,0 +1,7 @@
+1) on first page load, check for javascript errors
+    does song load on window load?
+    // PlaylistList.setFirstPlaylist is timeout too short?
+2) on change playlist, does load first song in lost? any errors?
+    // playlistSelect.addEventListener("change", function() {
+      setTimeout(function(){},200)})
+      is 200 enough? can I go lower? 

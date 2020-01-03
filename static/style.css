@@ -1,0 +1,338 @@
+*{
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+	border: 0;
+}
+li, select {
+  cursor: pointer;
+}
+
+/*GRID*/
+#wrapper {
+	display: grid;
+	grid-template-columns: 300px 1fr;
+	grid-template-rows: 28px 1fr 20px;
+	width: 100vw; height: 100vh;
+  background-color: #eef1ee;
+}
+
+#content {
+	grid-column: 2;
+	grid-row: 2;
+	background-color: #eef1ee;
+  overflow-y: scroll;
+  padding: 50px;
+  padding-top: 20px;
+}
+
+#songInfo {
+	grid-column: 2; grid-row: 3;
+	background-color: #e6e6e6;
+  border-top: 1px solid gray;
+}
+.songI {
+  float: right;
+  height: 100%; max-height: 100%; min-height: 100%;
+}
+.songI div {
+  display: inline-block;
+  float: right;
+  height: 100%; max-height: 100%; min-height: 100%;
+  font-size: 13px;
+  border-right: 1px solid black;
+  padding-right: 5px; padding-left: 5px;
+}
+
+/* MENU BAR */
+#menu {
+	position: fixed; top: 0; left: 0;
+  z-index: 100;
+	width: 100%;
+  height: 28px; min-height: 28px; max-height: 28px;
+	background-color: #97a906;
+	font-size: 0px;
+	box-shadow: 0px 2px 5px #615f5f;
+}
+#listBTN {
+  display: none;
+  background-color: inherit;
+  border-right: 1px solid black;
+}
+
+#listBTN:hover {
+  cursor: pointer;
+  background-color: #d5e644;
+}
+
+#foldMenuBTN {
+  display: none;
+  background-color: inherit;
+  float: right;
+  height: 28px; min-height: 28px; max-height: 28px;
+}
+
+#foldMenuBTN:hover {
+  background-color: #d5e644;
+}
+
+#foldMenuBTN img {
+  display: inline-block;
+  width: 35px;
+  height: 21px;
+  padding: 2px;
+}
+
+#menuList {
+  display: inline-block;
+  height: 28px; min-height: 28px; max-height: 28px;
+  float: right;
+}
+
+#menuList li {
+  display: block;
+  float: right;
+  font-size: 13px;
+  width: 110px;
+  border-left: 1px solid black;
+	padding: 6px; padding-right: 15px; padding-left: 15px;
+}
+
+#menuList li:hover {
+	background-color: #d5e644;
+	color: white;
+}
+
+.songTitle {
+  display: block;
+  font-size: 25px;
+  padding-bottom: 20px;
+}
+
+.parName {
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 10px;
+}
+
+.paragraph {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.parContainer {
+  display: block;
+  margin-bottom: 20px;
+}
+
+.paragraphsSpace {
+  line-height: 35px;
+  margin-top: -11px;
+}
+
+.chord {
+  display: inline-block;
+  z-index: 5;
+  font-size: 12px;
+  font-weight: bold;
+  position: relative;
+  top: -18px;
+}
+
+/* SUGGEST NEW SONG FORM */
+
+#suggestNS {
+  display: none;
+  position: fixed;
+  z-index: 1001;
+  top: calc(50% - 100px); left: calc(50% - 100px);
+  border: 1px solid black;
+  padding: 20px; padding-top: 0px;
+  background-color: #e6e6e6;
+  box-shadow: 0px 2px 5px #615f5f;
+}
+
+#suggestNS button {
+  position: relative;
+  right: -15px; top: 5px;
+  width: 15px;
+  height: 15px;
+  display: block;
+  border: 1px solid black;
+  margin-left: auto;
+}
+
+#suggestNS input, #suggestNS div {
+  display: block;
+  padding: 10px;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  border: 1px solid black;
+  box-shadow: 0px 1px 2px #615f5f;
+}
+
+#suggestBTN:hover {
+  background-color: gray;
+  color: white;
+}
+
+#suggestNS div {
+  font-size: 18px;
+  margin-top: 0px;
+  padding-top: 20px;
+  border: 0px;
+  box-shadow: 0px 0px 0px #615f5f;
+}
+
+#transparentPage {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background-color: white;
+  opacity: 0.5;
+  height: 100%; min-height: 100%;
+  width: 100%; min-width: 100%;
+
+}
+
+/* PLAY LIST AND LIST SIDEBAR */
+#songsList {
+  display: block;
+	position: fixed; left: 0px; top: 28px; z-index: 11;
+	width: 300px; min-width: 300px; max-width: 300px;
+	height: calc(100% - 28px);
+	min-height: calc(100% - 28px);
+	max-height: calc(100% - 28px);
+	background-color: #f2ff85;
+	border: 1px solid black;
+	border-top: 0;
+}
+
+#playList {
+	display: block; outline: none;
+  text-align-last:center;
+	font-size: 20px;
+	padding: 10px;
+	width: 100%; min-width: 100%;
+	text-align: center;
+	border-bottom: 1px solid gray;
+	box-shadow: 0px 2px 5px gray;
+  background-color: #d5e644;
+}
+#playListSongs {
+	height: calc(100% - 45px); min-height: calc(100% - 45px); max-height: calc(100% - 45px);
+	padding-top: 10px; padding-bottom: 10px;
+}
+
+#playListSongs ul {
+	list-style-type: none;
+	height: 100%; max-height: 100%; min-height: 100%;
+	width: 100%;
+	overflow-y: scroll;
+	padding-top: 0px;
+	padding-top: 0px; padding-bottom: 0px;
+	margin: 0;
+}
+
+#playListSongs li {
+	display: block;
+	padding: 0px;
+  padding-left: 20px;
+  line-height: 25px;
+  width: 100%; min-width: 100%; max-width: 100%;
+	overflow-x: hidden;
+}
+
+#playListSongs li:hover {
+  cursor: pointer;
+	font-weight: bold;
+  background-color: #d5e644;
+}
+
+#fold {
+	display: block; outline: none;
+	position: fixed; top: calc((100% - 60px) / 2); z-index: 10;
+	min-height: 70px; width: 70px; min-width: 70px;
+	background-color: #bebebe;
+	border: 1px solid black; border-radius: 70px;
+	line-height: 70px;
+	text-align: right;
+	font-size: 20px; font-weight: bolt; padding-right: 10px;
+}
+
+#playListSongs > li:hover:before {
+	content: " - ";
+	text-indent: -5px;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 12px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+@media screen and (max-width: 800px) {
+  #wrapper {
+    grid-template-columns: 0px 1fr;
+    grid-template-rows: 28px 1fr 20px;
+  }
+  #content {
+  }
+  #songInfo {
+  }
+  #songsList {
+    display: none;
+  }
+  #fold {
+    display: none;
+  }
+  #foldMenuBTN {
+    display: inline-block;
+  }
+  #listBTN {
+    display: inline-block;
+    float: left;
+    font-size: 15px;
+    padding: 5px; padding-right: 15px; padding-left: 15px;
+  }
+  #menuList {
+    z-index: 150;
+    height: auto; min-height: auto; max-height: none;
+    position: fixed;
+    right: 0px;
+    width: 150px;
+    top: 28px;
+    display: none;
+    border-bottom: 1px solid black; border-left: 1px solid black;
+    box-shadow: 0px 2px 5px #615f5f;
+    background-color: #f2ff85;
+  }
+  #menuList li {
+    width: 100%;
+    display: block;
+    float: none;
+    border: 0;
+  }
+
+  #suggestNS {
+    top: 28px; left: 0;
+    width: 100%; min-width: 100%; max-width: 100%;
+    height: calc(100% - 28px); min-height: calc(100% - 28px); max-height: calc(100% - 28px);
+  }
+
+}
+
+@media screen and (max-width: 420px) {
+  #songsList {
+    width: 100%; min-width: 100%; max-width: 100%;
+  }
+}

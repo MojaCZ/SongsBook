@@ -1,0 +1,48 @@
+00001>Chinaski
+00002>Lucie
+00003>lidové
+00004>various
+00005>various
+00006>Kryštof
+00007>Divokej Bill
+00008>COP
+00009>Petr Janda
+00010>Petr Kandela
+00011>Of Monsters & Men
+00012>Aleš Brichta
+00013>Bobby McFerrin
+00014>Karel Plíhal
+00015>Wohnout
+00016>The Beatles
+00017>Avicii
+00018>Train
+00019>Johnny Cash
+00020>Mňága a Žďorp
+00021>Jason Mraz
+00022>Bruno Mars
+00023>Zac Brown Band
+00024>Guns N'Roses
+00025>Jan Nedvěd
+00026>John Denver
+00027>Suchý Šlitr
+00028>Čechomor
+00029>Žlutý pes
+00030>Janek Ledecký
+00031>Buty
+00032>Jaromír Nohavica
+00033>Robert Křesťan
+00034>Xavier Baumaxa
+00035>Morcheeba
+00036>Vladimír Mišík
+00037>Eddie Vedder
+00038>Lynyrd Skynyrd
+00039>Simon & Garfunkle
+00040>Don McLean
+00041>Old Crow Medicine Show
+00042>Fleret
+00043>4 Non Blondes
+00044>Žalman
+00045>Wabi Daněk
+00046>Nedvědi
+00047>Nerez
+00048>Karel Kryl
