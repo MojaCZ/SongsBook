@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="viewport" content="height=device-height, initial-scale=1.0" />
+		<link rel="stylesheet" type="text/css" href="./SongsBook/files/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<script src="./SongsBook/files/angular.min.js"></script>
+<script src="./SongsBook/files/library.js" charset="utf-8"></script>
+<script src="./SongsBook/files/playlist.js" charset="utf-8"></script>
+<script src="./SongsBook/files/song.js" charset="utf-8"></script>
+<script src="./SongsBook/files/main.js" charset="utf-8"></script>
+
+<body ng-app="songsApp">
+
+  <!-- TOP MENU BAR -->
+	<div id="menu">
+		<button id="listBTN">PLAY LISTS</button>
+		<button id="foldMenuBTN" onclick="foldMenu(false)"><img src="./static/img/menu.png"/></button>
+		<ul id="menuList">
+			<li onclick="newSongFormToogle()">New song</li>
+			<li id="chordsOnBTN">Chords ON</li>
+			<li id="foldParBTN">Par fold</li>
+		</ul>
+	</div>
+
+	<div id="transparentPage"></div>
+
+
+  <!-- PLAY LISTS AND SONGS BAR -->
+  <button id="fold"><i class="fas fa-angle-left"></i></button>
+  <div id="songsList" ng-controller="playlistCtrl">
+    <!-- playlists -->
+    <select id="playList"
+			ng-model="PlList.ActiveID"
+			ng-change="updatePlaylist()">
+			<option ng-repeat="PL in PlList" ng-selected="selectedItem == PL" value="{{PL.id}}">{{PL.name}}</option>
+		</select>
+
+    <!-- songs -->
+    <div id="playListSongs">
+      <ul id="ulSongs">
+        <li ng-repeat="song in PlList.ActivePL.songs" ng-click="showSong(song.id)">{{song.name}}</li>
+      </ul>
+    </div>
+  </div>
+
+	<!-- SONG BAR -->
+  <div id="wrapper" ng-controller="songCtrl">
+    <div id="content">
+			<h1>{{currentSong.Title}}</h1>
+				<p ng-repeat="par in currentSong.ParagraphsOrder">
+					{{par}}
+				</p>
+		</div>
+    <div id="songInfo">
+			<ul class="songI">
+				<li>artist: {{currentSong.Artist}}</li>
+				<li>language: {{currentSong.Language}}</li>
+				<li>tempo: {{currentSong.Tempo}}</li>
+				<li>capo: {{currentSong.Capo}}</li>
+				<li>key: {{currentSong.Key}}</li>
+			</ul>
+		</div>
+  </div>
+
+  <!-- FORM FOR SUGGESTING NEW SONG, HIDDEN BY DEFAULT -->
+  <form action="SongsBook/suggestNS" method="POST" id="suggestNS">
+    <button type="button" onclick="newSongFormToogle()">X</button>
+    <div> SUGGEST A NEW SONG </div>
+    <input type="text" name="newSong" id="newSong" placeholder="New song name"  />
+    <input type="submit" id="suggestBTN" />
+  </form>
+</body>
+</html>
