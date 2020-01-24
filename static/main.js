@@ -16,6 +16,7 @@ app.run(function($http, $rootScope){
   $rootScope.loadSongs = function() {
     // get songs of playlist I just get from server
     let songsIDs = [];
+    console.log($rootScope.PlList.ActivePL.songs)
     for(let i=0; i<$rootScope.PlList.ActivePL.songs.length; i++) {
       songsIDs.push($rootScope.PlList.ActivePL.songs[i].id)
     }
@@ -41,11 +42,13 @@ app.run(function($http, $rootScope){
     })
   }
 
+  // GET SONGS PLAYLISTS
   $http.get("/SongsBook/playlistsJSON").then( function(response) {
     // Init playlist list
     $rootScope.PlList = response.data
     $rootScope.PlList.ActiveID = $rootScope.PlList[0].id
     $rootScope.PlList.ActivePL = $rootScope.PlList[0]
+    console.log($rootScope.PlList)
     $rootScope.loadSongs();
   });
 

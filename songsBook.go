@@ -6,29 +6,32 @@ import (
 	"./goServer/song"
 	// "../../../../SERVER/02_songs-book/goServer/confLoader"
 	// "../../www/songs-book/goServer/dbEngine"
-	"html/template"
+	// "html/template"
 	"log"
 	"net/http"
 	"strings"
 	"os"
+	// "fmt"
 )
 
-var (
-	tpl *template.Template
-)
+// var (
+// 	tpl *template.Template
+// )
 
-func init() {
-	tpl = template.Must(template.ParseGlob("./templates/*.gohtml"))
-
+// func init() {
+// 	tpl = template.Must(template.ParseGlob("./templates/*.gohtml"))
+//
 	// update playListJSON file
 	// playListJSON := playList.ConvertPlayListJSON("../data/play_lists", "../data/songs")
 	// playList.SavePlayLists(playListJSON, "/home/moja/Programming/www/songs-book/static/plJSON.txt")
-}
+// }
 
 func main() {
 
 	http.Handle("/SongsBook/files/", http.StripPrefix("/SongsBook/files", http.FileServer(http.Dir("./static"))))
-	http.HandleFunc("/", index)
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request){
+		http.ServeFile(w, r, "./index.html")
+	})
 	http.HandleFunc("/SongsBook/favicon.ico", ico)
 	http.HandleFunc("/SongsBook/playlistsJSON", playlistsJSON)
 	http.HandleFunc("/SongsBook/songsInPlaylistJSON", songsInPlaylistJSON)
@@ -42,18 +45,58 @@ func main() {
 }
 
 func playlistsJSON(w http.ResponseWriter, req *http.Request) {
-	playlists := playlist.ReturnPlaylistsJSON()
+	PlList := playlist.ReturnPlaylistsJSON()
+	PL_JSON := ""
+	PL_JSON += "["
+	for i:=0; i<len(PlList); i++ {
+		// create playlist
+		P := playlist.NewPlaylist("PlaylistToBeSent")
+
+		// load playlist
+		err := P.LoadByPlaylistID(PlList[i][0])
+		if err != nil { log.Println(err) }
+
+		// get JSON from playlist
+		songsJSON, err := P.JSONPlaylistSongs()
+		if err != nil { log.Println(err) }
+
+		// get songs
+		PL_JSON += "{\"id\": \"" + PlList[i][0] +  "\", \"name\":\"" +  PlList[i][1] +  "\", \"songs\":" + songsJSON + "},"
+	}	// end of for loop of playlists
+
+	// load CZ
+	PCZ := playlist.NewPlaylist("PlaylistCZ")
+	err := PCZ.LoadByHeader("language", "CZ")
+	if err != nil { log.Println(err) }
+	songsJSON_CZ, err := PCZ.JSONPlaylistSongs()
+	if err != nil { log.Println(err) }
+
+	PL_JSON += "{\"id\": \"99997\", \"name\":\"CZ ALL\", \"songs\":" + songsJSON_CZ + "},"
+
+	// load EN
+	PEN := playlist.NewPlaylist("PlaylistCZ")
+	err = PEN.LoadByHeader("language", "CZ")
+	if err != nil { log.Println(err) }
+	songsJSON_EN, err := PEN.JSONPlaylistSongs()
+	if err != nil { log.Println(err) }
+
+	PL_JSON += "{\"id\": \"99998\", \"name\":\"EN ALL\", \"songs\":" + songsJSON_EN + "}]"
+
+
 	w.Header().Set("Content-Type", "application/json")
-	w.Write([]byte(playlists))
-}
+	w.Write([]byte(PL_JSON))
+	}
+
 
 func songsInPlaylistJSON(w http.ResponseWriter, req *http.Request) {
 	if req.Method != http.MethodPost {
 		http.Error(w, "not method post", http.StatusSeeOther)
 		return
 	}
+	req.ParseForm()
 	playlistID := req.FormValue("playlistID")
 	P := playlist.NewPlaylist("PlaylistToBeSent")
+
 
 	if playlistID == "99997" {													// I want playlist by CZ
 		err := P.LoadByHeader("language", "CZ")
@@ -147,25 +190,10 @@ func ico(w http.ResponseWriter, req *http.Request) {
 	http.ServeFile(w, req, "./static/img/note.png")
 }
 
-func index(w http.ResponseWriter, req *http.Request) {
-
-	err := tpl.ExecuteTemplate(w, "header.gohtml", nil)
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	err = tpl.ExecuteTemplate(w, "listSongs.gohtml", nil)
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	err = tpl.ExecuteTemplate(w, "content.gohtml", nil)
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	err = tpl.ExecuteTemplate(w, "footer.gohtml", nil)
-	if err != nil {
-		log.Fatalln(err)
-	}
-}
+// func index(w http.ResponseWriter, req *http.Request) {
+//
+// 	err := tpl.ExecuteTemplate(w, "index.gohtml", nil)
+// 	if err != nil {
+// 		log.Fatalln(err)
+// 	}
+// }

@@ -30,23 +30,22 @@ func init() {
 	// log.Println("playlist dbConfig configurated")
 }
 
-func ReturnPlaylistsJSON() (playlists string) {
+func ReturnPlaylistsJSON() ([][]string) {
 	playlistTable, err := dbEngine.NewTable(playlistDB, "playlists", "songID", "playlistID")
 	if err != nil {
 		log.Print(err)
 	}
-	ID_Name := playlistTable.GiveAll()
-	playlists += "["
-	for i:=0; i<len(ID_Name); i++ {
-		playlists += "[\"" + ID_Name[i][0] +  "\", \"" +  ID_Name[i][1] +  "\"],"
-	}
-	playlists += "[\"99997\", \"CZ ALL\"],"
-	playlists += "[\"99998\", \"EN ALL\"],"
-	playlists += "[\"99999\", \"ALL SONGS\"],"
-	playlists = playlists[:len(playlists)-1]
-	playlists += "]"
-
-	return playlists
+	return playlistTable.GiveAll()
+	// playlists += "["
+	// for i:=0; i<len(ID_Name); i++ {
+	// 	playlists += "{\"id\": \"" + ID_Name[i][0] +  "\", \"name\":\"" +  ID_Name[i][1] +  "\"},"
+	// }
+	// playlists += "{\"id\":\"99997\", \"name\":\"CZ ALL\"},"
+	// playlists += "{\"id\":\"99998\", \"name\":\"EN ALL\"},"
+	// playlists += "{\"id\":\"99999\", \"name\":\"ALL SONGS\"},"
+	// playlists = playlists[:len(playlists)-1]
+	// playlists += "]"
+	// return playlists
 }
 
 // PlayList is interface that implements all types with methods SongsDir() and SongsNames()
@@ -271,7 +270,7 @@ func (P playlist) JSONPlaylistSongs() (plsJSON string, err error) {
 
 	plsJSON += "[\n"
 	for i := 0; i < len(P.songsIDs); i++ {
-		plsJSON += "\t[\"" + P.songsIDs[i] + "\", \"" + P.songsNames[i] + "\"], \n"
+		plsJSON += "\t{\"id\":\"" + P.songsIDs[i] + "\",\n\t\"name\":\"" + P.songsNames[i] + "\"}, \n"
 	}
 	plsJSON = plsJSON[:len(plsJSON)-3]
 	plsJSON += " \n]\n"
