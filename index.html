@@ -36,7 +36,7 @@
     <!-- playlists -->
     <select id="playList"
 			ng-model="PlList.ActiveID"
-			ng-change="updatePlaylist()">
+			ng-change="selectPlaylist()">
 			<option ng-repeat="PL in PlList" ng-selected="selectedItem == PL" value="{{PL.id}}">{{PL.name}}</option>
 		</select>
 
@@ -51,10 +51,11 @@
 	<!-- SONG BAR -->
   <div id="wrapper" ng-controller="songCtrl">
     <div id="content">
-			<h1>{{currentSong.Title}}</h1>
-				<p ng-repeat="par in currentSong.ParagraphsOrder">
-					{{par}}
-				</p>
+			<h1 class="songTitle">{{currentSong.Title}}</h1>
+				<div ng-repeat="par in currentSong.ParagraphsOrder track by $index">
+					<div class="parName">{{par}}:</div>
+					<div class="paragraphsSpace paragraph" ng-bind-html="currentSong.Paragraphs[par] | unsafe"></div>
+				</div>
 		</div>
     <div id="songInfo">
 			<ul class="songI">

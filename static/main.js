@@ -2,7 +2,6 @@ var app = angular.module('songsApp', []);
 
 app.filter("unsafe", function($sce){
   return function(val) {
-    console.log($sce.trustAsHtml(val))
     return $sce.trustAsHtml(val)
   }
 })
@@ -16,7 +15,6 @@ app.run(function($http, $rootScope){
   $rootScope.loadSongs = function() {
     // get songs of playlist I just get from server
     let songsIDs = [];
-    console.log($rootScope.PlList.ActivePL.songs)
     for(let i=0; i<$rootScope.PlList.ActivePL.songs.length; i++) {
       songsIDs.push($rootScope.PlList.ActivePL.songs[i].id)
     }
@@ -38,8 +36,19 @@ app.run(function($http, $rootScope){
         $rootScope.LoadedSongs.songs[i] = response1.data[i]
       }
       // Set first song to display (from loaded songs get song with ID of first song of Acrive playlist)
-      $rootScope.currentSong = $rootScope.LoadedSongs.songs[$rootScope.PlList.ActivePL.songs[0].id]
+      let firstID = $rootScope.PlList.ActivePL.songs[0].id
+      $rootScope.showSong(firstID);
     })
+  }
+  // on change of select
+  $rootScope.selectPlaylist = function() {
+    $rootScope.PlList.ActivePL = $rootScope.PlList.find(pl => pl.id === $rootScope.PlList.ActiveID)
+    $rootScope.loadSongs();
+  }
+
+  $rootScope.showSong = function(songID) {
+    $rootScope.currentSong = $rootScope.LoadedSongs.songs[songID]
+    console.log($rootScope.currentSong)
   }
 
   // GET SONGS PLAYLISTS
@@ -48,7 +57,6 @@ app.run(function($http, $rootScope){
     $rootScope.PlList = response.data
     $rootScope.PlList.ActiveID = $rootScope.PlList[0].id
     $rootScope.PlList.ActivePL = $rootScope.PlList[0]
-    console.log($rootScope.PlList)
     $rootScope.loadSongs();
   });
 
@@ -56,17 +64,6 @@ app.run(function($http, $rootScope){
 
 app.controller("playlistCtrl", function($scope, $http) {
 
-  // on change of select
-  $scope.updatePlaylist = function() {
-    $scope.PlList.ActivePL = $scope.PlList.find(pl => pl.id === $scope.PlList.ActiveID)
-    $scope.loadSongs();
-    console.log($scope.currentSong)
-  }
-
-  $scope.showSong = function(songID) {
-    // get song from already loaded songs
-    $scope.currentSong = $scope.LoadedSongs.songs[songID]
-  }
 })
 
 app.controller("songCtrl", function($scope){
