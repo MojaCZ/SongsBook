@@ -35,7 +35,7 @@ li, select {
   float: right;
   height: 100%; max-height: 100%; min-height: 100%;
 }
-.songI div {
+.songI li {
   display: inline-block;
   float: right;
   height: 100%; max-height: 100%; min-height: 100%;
@@ -142,7 +142,7 @@ li, select {
 /* SUGGEST NEW SONG FORM */
 
 #suggestNS {
-  display: none;
+  display: block;
   position: fixed;
   z-index: 1001;
   top: calc(50% - 100px); left: calc(50% - 100px);

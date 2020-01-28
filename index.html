@@ -10,29 +10,29 @@
 
 <script src="./SongsBook/files/angular.min.js"></script>
 <script src="./SongsBook/files/library.js" charset="utf-8"></script>
-<script src="./SongsBook/files/playlist.js" charset="utf-8"></script>
+<!-- <script src="./SongsBook/files/playlist.js" charset="utf-8"></script> -->
 <script src="./SongsBook/files/song.js" charset="utf-8"></script>
 <script src="./SongsBook/files/main.js" charset="utf-8"></script>
 
-<body ng-app="songsApp">
+<body ng-app="songsApp" ng-controller="songsCtrl">
 
   <!-- TOP MENU BAR -->
 	<div id="menu">
 		<button id="listBTN">PLAY LISTS</button>
 		<button id="foldMenuBTN" onclick="foldMenu(false)"><img src="./static/img/menu.png"/></button>
 		<ul id="menuList">
-			<li onclick="newSongFormToogle()">New song</li>
-			<li id="chordsOnBTN">Chords ON</li>
-			<li id="foldParBTN">Par fold</li>
+			<li ng-click="showSuggestion()">New song</li>
+			<li ng-click="showChords()">Chords ON</li>
+			<li ng-click="foldPar()">Par fold</li>
 		</ul>
 	</div>
 
-	<div id="transparentPage"></div>
+	<div id="transparentPage" ng-show="suggestionON"></div>
 
 
   <!-- PLAY LISTS AND SONGS BAR -->
   <button id="fold"><i class="fas fa-angle-left"></i></button>
-  <div id="songsList" ng-controller="playlistCtrl">
+  <div id="songsList">
     <!-- playlists -->
     <select id="playList"
 			ng-model="PlList.ActiveID"
@@ -49,13 +49,13 @@
   </div>
 
 	<!-- SONG BAR -->
-  <div id="wrapper" ng-controller="songCtrl">
+  <div id="wrapper">
     <div id="content">
 			<h1 class="songTitle">{{currentSong.Title}}</h1>
-				<div ng-repeat="par in currentSong.ParagraphsOrder track by $index">
-					<div class="parName">{{par}}:</div>
-					<div class="paragraphsSpace paragraph" ng-bind-html="currentSong.Paragraphs[par] | unsafe"></div>
-				</div>
+			<div ng-repeat="par in currentSong.ParagraphsOrder track by $index">
+				<div class="parName">{{par}}:</div>
+				<div paragraph chords-off="chordsOff" par-text="currentSong.Paragraphs[par]" class="paragraph"></div>
+			</div>
 		</div>
     <div id="songInfo">
 			<ul class="songI">
@@ -69,8 +69,8 @@
   </div>
 
   <!-- FORM FOR SUGGESTING NEW SONG, HIDDEN BY DEFAULT -->
-  <form action="SongsBook/suggestNS" method="POST" id="suggestNS">
-    <button type="button" onclick="newSongFormToogle()">X</button>
+  <form action="SongsBook/suggestNS" method="POST" ng-show="suggestionON" id="suggestNS">
+    <button type="button" ng-click="showSuggestion()">X</button>
     <div> SUGGEST A NEW SONG </div>
     <input type="text" name="newSong" id="newSong" placeholder="New song name"  />
     <input type="submit" id="suggestBTN" />

@@ -1,32 +1,48 @@
 var app = angular.module('songsApp', []);
 
-app.filter("unsafe", function($sce){
+app.filter("unsafe", function($sce) {
   return function(val) {
     return $sce.trustAsHtml(val)
   }
 })
+app.directive("paragraph", function($compile) {
+  return {
+    scope: {
+      chordsOff: "=",
+      parText: "="
+    },
+    // template: "<div></div>",
+    replace: true,
+    // restrict: 'E',
+    link: function(scope, element, attrs) {
+      element.append(scope.parText);
+      $compile(element.contents())(scope);
+    }
+  }
+})
 
-app.run(function($http, $rootScope){
+app.run(function($http, $rootScope, $compile){
   $rootScope.PlList   = null;
   $rootScope.LoadedSongs = new LoadedSongsList();
   $rootScope.currentSong = null;
+  $rootScope.chordsOff = true;
+  $rootScope.parFold = false;
+  $rootScope.suggestionON = false;
 
+  // getPlaylists reach to server for playlists database and return promise
+  $rootScope.getPlaylists = function(){
+    // GET SONGS PLAYLISTS
+    return $http.get("/SongsBook/playlistsJSON").then( function(response) {
+      // Init playlist list
+      $rootScope.PlList = response.data
+      $rootScope.PlList.ActiveID = $rootScope.PlList[0].id
+      $rootScope.PlList.ActivePL = $rootScope.PlList[0]
+    });
+  }
 
-  $rootScope.loadSongs = function() {
-    // get songs of playlist I just get from server
-    let songsIDs = [];
-    for(let i=0; i<$rootScope.PlList.ActivePL.songs.length; i++) {
-      songsIDs.push($rootScope.PlList.ActivePL.songs[i].id)
-    }
-    songsIDs = $rootScope.LoadedSongs.songsToLoad(songsIDs)
-    if(songsIDs.length == 0) {return}
-
-    let data = "";
-    for(let i=0; i<songsIDs.length; i++) {
-      data += songsIDs[i] + ","
-    }
-    data = "songsIDs=" + data.substring(0, data.length-1)
-    $http({   // songs request
+  // getSongs reach out to server to get songs and return promise
+  $rootScope.getSongs = function(data){
+    return $http({   // songs request
       method: "POST",
       url: "/SongsBook/songsJSON",
       headers: {"Content-type": "application/x-www-form-urlencoded"},
@@ -34,40 +50,73 @@ app.run(function($http, $rootScope){
     }).then(function(response1) {   // load songs contents
       for(let i in response1.data) {
         $rootScope.LoadedSongs.songs[i] = response1.data[i]
+        $rootScope.LoadedSongs.parseSong(i)
       }
-      // Set first song to display (from loaded songs get song with ID of first song of Acrive playlist)
-      let firstID = $rootScope.PlList.ActivePL.songs[0].id
-      $rootScope.showSong(firstID);
     })
   }
+})
+
+app.controller("songsCtrl", function($scope) {
+  $scope.getPlaylists().then(function(){$scope.loadSongs();})
+
   // on change of select
-  $rootScope.selectPlaylist = function() {
-    $rootScope.PlList.ActivePL = $rootScope.PlList.find(pl => pl.id === $rootScope.PlList.ActiveID)
-    $rootScope.loadSongs();
+  $scope.selectPlaylist = function() {
+    $scope.PlList.ActivePL = $scope.PlList.find(pl => pl.id === $scope.PlList.ActiveID)
+    $scope.loadSongs();
   }
 
-  $rootScope.showSong = function(songID) {
-    $rootScope.currentSong = $rootScope.LoadedSongs.songs[songID]
-    console.log($rootScope.currentSong)
+  // function showSong change current song that is displayed in view
+  $scope.showSong = function(songID) {
+    $scope.currentSong = $scope.LoadedSongs.songs[songID]
+    console.log($scope.currentSong)
   }
 
-  // GET SONGS PLAYLISTS
-  $http.get("/SongsBook/playlistsJSON").then( function(response) {
-    // Init playlist list
-    $rootScope.PlList = response.data
-    $rootScope.PlList.ActiveID = $rootScope.PlList[0].id
-    $rootScope.PlList.ActivePL = $rootScope.PlList[0]
-    $rootScope.loadSongs();
-  });
+  // loadSongs
+  $scope.loadSongs = function() {
+    // get songs of playlist I just get from server
+    let songsIDs = [];
+    for(let i=0; i<$scope.PlList.ActivePL.songs.length; i++) {
+      songsIDs.push($scope.PlList.ActivePL.songs[i].id)
+    }
+    songsIDs = $scope.LoadedSongs.songsToLoad(songsIDs)
+    if(songsIDs.length == 0) {  // not anything to load. Set song and return
+      let firstID = $scope.PlList.ActivePL.songs[0].id
+      $scope.showSong(firstID);
+      return;
+    }
 
-})
+    // form data to be requested
+    let data = "";
+    for(let i=0; i<songsIDs.length; i++) {
+      data += songsIDs[i] + ","
+    }
+    data = "songsIDs=" + data.substring(0, data.length-1)
+    $scope.getSongs(data).then(function(){
+      // Set first song to display (from loaded songs get song with ID of first song of Acrive playlist)
+      let firstID = $scope.PlList.ActivePL.songs[0].id
+      $scope.showSong(firstID);
+    })
+  }
 
-app.controller("playlistCtrl", function($scope, $http) {
+  $scope.showChords = function() {
+    if($scope.chordsOff) {
+      $scope.chordsOff = false;
+    } else {
+      $scope.chordsOff = true;
+    }
+  }
 
-})
+  $scope.foldPar = function() {
 
-app.controller("songCtrl", function($scope){
+  }
 
+  $scope.showSuggestion = function(){
+    if($scope.suggestionON) {
+      $scope.suggestionON = false;
+    } else {
+      $scope.suggestionON = true;
+    }
+  }
 })
 
 window.onload = function() {
@@ -96,7 +145,7 @@ window.onload = function() {
   // })
 
   // set newSongForm display none
-  newSongFormToogle()
+  // newSongFormToogle()
 
   // set Cookie if not yet
   // if (getCookie("chordsON") == "") {

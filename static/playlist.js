@@ -221,54 +221,9 @@ class PlayListBar {
   // }
 // }
 
-class allSongs{
 
-}
 
-// class Song {
-//   constructor(){
-//
-//   }
-//   loadSong(songJSON)
-// }
 
-// class Playlist {
-//   constructor(id, name){
-//
-//   }
-//   addSong(id, name){
-//
-//   }
-//   loadSong(id, name, songJSON){
-//
-//   }
-//   label:
-//   value:
-//   songs:[
-//     {
-//     name:
-//     id:
-//   },
-//   ]
-// }
-
-// PlList{
-//   lists: [Playlist]
-// }
-
-class PlList {
-  constructor() {
-    this.playlists = [] // object of id name songs[id name]
-    this.ActivePlaylist = null
-  }
-
-  // songsInPL() {
-  //   for(let i=0; i<this.playlists.length; i++){
-  //     console.log(this.playlists[i])
-  //   }
-  // }
-
-}
 
 class ActivePlaylist {
   // when PlayList is initialized, get list of songs and load this songs
@@ -282,25 +237,6 @@ class ActivePlaylist {
     this.loadSongsInPlaylist()
   }
 
-  loadSongsInPlaylist() {
-    var self = this
-
-    // loadPlayLists function get address, send request and ger
-    var addr = "/SongsBook/songsInPlaylistJSON"
-    var http = new XMLHttpRequest();
-    var par = "playlistID=" + this.PlaylistID
-    http.open('POST', addr, true)
-    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
-    http.onload = function() {
-      if (http.responseText.length > 2) {
-        plJSON = JSON.parse(http.responseText);
-        self.setSongs(plJSON)
-      } else {
-        alert("playlist is empty")
-      }
-    }
-    http.send(par);
-  }
 
   setSongs(plJSON) {
     for(var i=0; i<plJSON.length; i++) {

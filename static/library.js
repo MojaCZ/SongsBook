@@ -20,22 +20,22 @@ function foldMenu(defaultDisplay) {
 }
 
 // show/hide newSongForm
-function newSongFormToogle() {
-  var NSF = document.getElementById("suggestNS")
-  var NSTransparrent = document.getElementById("transparentPage")
-  if (NSF.style.display === "none") {
-    NSF.style.display = "block"
-    NSTransparrent.style.display = "block"
-    document.getElementById("newSong").select()
-    // NSTransparrent.addEventListener("click", newSongFormToogle())
-
-  } else {
-    NSF.style.display = "none"
-    NSTransparrent.style.display = "none"
-    document.getElementById("playList").focus()
-    // NSTransparrent.removeEventListener("click", newSongFormToogle())
-  }
-}
+// function newSongFormToogle() {
+//   var NSF = document.getElementById("suggestNS")
+//   var NSTransparrent = document.getElementById("transparentPage")
+//   if (NSF.style.display === "none") {
+//     NSF.style.display = "block"
+//     NSTransparrent.style.display = "block"
+//     document.getElementById("newSong").select()
+//     // NSTransparrent.addEventListener("click", newSongFormToogle())
+//
+//   } else {
+//     NSF.style.display = "none"
+//     NSTransparrent.style.display = "none"
+//     document.getElementById("playList").focus()
+//     // NSTransparrent.removeEventListener("click", newSongFormToogle())
+//   }
+// }
 
 // setCookie is function that create/set cookie with given name, value and days to expire
 function setCookie(name, value, exdays) {
