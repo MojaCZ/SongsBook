@@ -38,10 +38,18 @@ class LoadedSongsList {
           break;
         }
       }
-      parHTML.setAttribute("contain-chord", containChord)
-      parHTML.setAttribute("ng-class", "{'paragraphsSpace':!chordsOff &&" + containChord + "}")
-      // parHTML.setAttribute("ng-class", "parFold ? 'paragraphsSpace'")
-      this.songs[i].Paragraphs[par] = parHTML.outerHTML;
+      parHTML = parHTML.innerHTML;
+
+      if(parHTML.startsWith("<br>")){
+        parHTML = parHTML.substring(4,parHTML.length)
+      }
+
+      if(containChord){
+        parHTML = 'ng-class="{\'paragraphsSpace\':!chordsOff && true}">' + parHTML
+      }else{
+        parHTML = 'ng-class="{\'paragraphsSpace\':!chordsOff && false}">' + parHTML
+      }
+      this.songs[i].Paragraphs[par] = parHTML;
     }
   }
 }

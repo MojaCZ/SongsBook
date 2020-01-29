@@ -1,22 +1,40 @@
 var app = angular.module('songsApp', []);
 
-app.filter("unsafe", function($sce) {
-  return function(val) {
-    return $sce.trustAsHtml(val)
-  }
-})
-app.directive("paragraph", function($compile) {
+app.directive("paragraphs", function($compile) {
   return {
     scope: {
       chordsOff: "=",
-      parText: "="
+      songObject: "=",
+      parFold: "=",
     },
-    // template: "<div></div>",
+    template: '<div></div>',
     replace: true,
-    // restrict: 'E',
-    link: function(scope, element, attrs) {
-      element.append(scope.parText);
-      $compile(element.contents())(scope);
+    restrict: 'A',
+    link: function(scope, element, attr) {
+      scope.$watch("songObject", function(){
+        if(scope.songObject === null){return} // if songs are not loaded yet
+        let HTMLstring = ''
+        let alreadyIN = []
+        for(let i=0; i<scope.songObject.ParagraphsOrder.length; i++){
+          let par = scope.songObject.ParagraphsOrder[i]
+          let parFold = alreadyIN.includes(par)
+          alreadyIN.push(par)
+
+          HTMLstring += '\n\n<div class="parContainer">\n\t<div class="parName">' + par + ':</div>'
+          HTMLstring += '\n\t<div class="paragraph"'
+          if(parFold){
+            HTMLstring += '\n\t ng-show="parFold" ' + scope.songObject.Paragraphs[par]
+          }else{
+            HTMLstring += scope.songObject.Paragraphs[par]
+          }
+          HTMLstring += '\n\t</div>\n</div>'
+
+        }
+        HTMLstring += '</div>'
+        element.empty()
+        element.append(HTMLstring);
+        $compile(element.contents())(scope);
+      })
     }
   }
 })
@@ -26,8 +44,9 @@ app.run(function($http, $rootScope, $compile){
   $rootScope.LoadedSongs = new LoadedSongsList();
   $rootScope.currentSong = null;
   $rootScope.chordsOff = true;
-  $rootScope.parFold = false;
+  $rootScope.parFold = true;
   $rootScope.suggestionON = false;
+  $rootScope.parRepeate = [];
 
   // getPlaylists reach to server for playlists database and return promise
   $rootScope.getPlaylists = function(){
@@ -41,7 +60,7 @@ app.run(function($http, $rootScope, $compile){
   }
 
   // getSongs reach out to server to get songs and return promise
-  $rootScope.getSongs = function(data){
+  $rootScope.getSongs = function(data) {
     return $http({   // songs request
       method: "POST",
       url: "/SongsBook/songsJSON",
@@ -68,7 +87,6 @@ app.controller("songsCtrl", function($scope) {
   // function showSong change current song that is displayed in view
   $scope.showSong = function(songID) {
     $scope.currentSong = $scope.LoadedSongs.songs[songID]
-    console.log($scope.currentSong)
   }
 
   // loadSongs
@@ -99,6 +117,7 @@ app.controller("songsCtrl", function($scope) {
   }
 
   $scope.showChords = function() {
+  // $scope.showChords = function() {
     if($scope.chordsOff) {
       $scope.chordsOff = false;
     } else {
@@ -107,7 +126,11 @@ app.controller("songsCtrl", function($scope) {
   }
 
   $scope.foldPar = function() {
-
+    if($scope.parFold) {
+      $scope.parFold = false;
+    } else {
+      $scope.parFold = true;
+    }
   }
 
   $scope.showSuggestion = function(){

@@ -4,6 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="viewport" content="height=device-height, initial-scale=1.0" />
+		<title>Songs Book</title>
 		<link rel="stylesheet" type="text/css" href="./SongsBook/files/style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -52,10 +53,7 @@
   <div id="wrapper">
     <div id="content">
 			<h1 class="songTitle">{{currentSong.Title}}</h1>
-			<div ng-repeat="par in currentSong.ParagraphsOrder track by $index">
-				<div class="parName">{{par}}:</div>
-				<div paragraph chords-off="chordsOff" par-text="currentSong.Paragraphs[par]" class="paragraph"></div>
-			</div>
+			<div paragraphs chords-off="chordsOff" par-fold="parFold" song-object="currentSong"></div>
 		</div>
     <div id="songInfo">
 			<ul class="songI">
