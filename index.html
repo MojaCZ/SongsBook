@@ -6,7 +6,7 @@
 		<meta name="viewport" content="height=device-height, initial-scale=1.0" />
 		<title>Songs Book</title>
 		<link rel="stylesheet" type="text/css" href="./SongsBook/files/style.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/6f10b46713.js" crossorigin="anonymous"></script>
 </head>
 
 <script src="./SongsBook/files/angular.min.js"></script>
@@ -16,15 +16,22 @@
 <script src="./SongsBook/files/main.js" charset="utf-8"></script>
 
 <body ng-app="songsApp" ng-controller="songsCtrl">
-
+	<div id="wrapper">
   <!-- TOP MENU BAR -->
 	<div id="menu">
-		<button id="listBTN">PLAY LISTS</button>
-		<button id="foldMenuBTN" onclick="foldMenu(false)"><img src="./static/img/menu.png"/></button>
+		<!-- playlists -->
+		<select id="playList"
+			ng-model="PlList.ActiveID"
+			ng-change="selectPlaylist()">
+			<option ng-repeat="PL in PlList" ng-selected="selectedItem == PL" value="{{PL.id}}">{{PL.name}}</option>
+		</select>
 		<ul id="menuList">
-			<li ng-click="showSuggestion()">New song</li>
-			<li ng-click="showChords()">Chords ON</li>
-			<li ng-click="foldPar()">Par fold</li>
+			<li class="iconBTN {{!songsListOn ? 'borderBox' : 'borderBoxOn'}}" ng-click="showSongs()"><i class="far fa-file-audio"></i></li>
+			<li class="iconBTN {{playlistsOn ? 'borderBox' : 'borderBoxOn'}}" ng-click="showPlaylists()"><i class="fas fa-compact-disc"></i></li>
+			<li class="iconBTN borderBox" ng-click="foldMenu()"><i class="fas fa-sliders-h"></i></li>
+			<li class="iconBTN borderBox" ng-click="showSuggestion()"><i class="fas fa-folder-plus"></i></li>
+			<li class="iconBTN {{chordsOff ? 'borderBox' : 'borderBoxOn'}}" ng-click="showChords()"><i class="fas fa-music"></i></li>
+			<li class="iconBTN {{parFold ? 'borderBox' : 'borderBoxOn'}}" ng-click="foldPar()"><i class="fas fa-paragraph"></i></li>
 		</ul>
 	</div>
 
@@ -32,25 +39,26 @@
 
 
   <!-- PLAY LISTS AND SONGS BAR -->
-  <button id="fold"><i class="fas fa-angle-left"></i></button>
   <div id="songsList">
-    <!-- playlists -->
-    <select id="playList"
-			ng-model="PlList.ActiveID"
-			ng-change="selectPlaylist()">
-			<option ng-repeat="PL in PlList" ng-selected="selectedItem == PL" value="{{PL.id}}">{{PL.name}}</option>
-		</select>
-
     <!-- songs -->
-    <div id="playListSongs">
-      <ul id="ulSongs">
-        <li ng-repeat="song in PlList.ActivePL.songs" ng-click="showSong(song.id)">{{song.name}}</li>
+    <div id="playListSongs" ng-show="songsListOn">
+      <ul>
+        <li ng-repeat="song in PlList.ActivePL.songs" ng-click="showSong(song.id)">
+					<div class="songListWrapper">
+						<div class="songsListText">
+							<div class="songsListTitle" ng-bind="song.name"></div>
+							<div class="songsListArtist" ng-bind="LoadedSongs.songs[song.id].Artist"></div>
+						</div>
+						<div class="playListSongBTN" ng-show="LoadedSongs.songs[song.id] == currentSong"><i class="fas fa-play-circle"></i></div>
+					</div>
+					<div class="songListHr"></div>
+				</li>
       </ul>
     </div>
   </div>
 
 	<!-- SONG BAR -->
-  <div id="wrapper">
+
     <div id="content">
 			<h1 class="songTitle">{{currentSong.Title}}</h1>
 			<div paragraphs chords-off="chordsOff" par-fold="parFold" song-object="currentSong"></div>

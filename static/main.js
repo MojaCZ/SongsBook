@@ -46,6 +46,8 @@ app.run(function($http, $rootScope, $compile){
   $rootScope.chordsOff = true;
   $rootScope.parFold = true;
   $rootScope.suggestionON = false;
+  $rootScope.songsListOn = true;
+  $rootScope.playlistsOn = false;
   $rootScope.parRepeate = [];
 
   // getPlaylists reach to server for playlists database and return promise
@@ -140,6 +142,21 @@ app.controller("songsCtrl", function($scope) {
       $scope.suggestionON = true;
     }
   }
+  $scope.showSongs = function(){
+    if($scope.songsListOn) {
+      $scope.songsListOn = false;
+    } else {
+      $scope.songsListOn = true;
+    }
+  }
+  $scope.showPlaylists = function(){
+    if($scope.playlistsOn) {
+      $scope.playlistsOn = false;
+    } else {
+      $scope.playlistsOn = true;
+    }
+  }
+
 })
 
 window.onload = function() {

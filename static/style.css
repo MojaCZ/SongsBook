@@ -8,15 +8,28 @@ li, select {
   cursor: pointer;
 }
 
-/*GRID*/
+/*GRID____________________________*/
 #wrapper {
 	display: grid;
 	grid-template-columns: 300px 1fr;
-	grid-template-rows: 28px 1fr 20px;
+	grid-template-rows: 70px 1fr 20px;
 	width: 100vw; height: 100vh;
-  background-color: #eef1ee;
+  background-color: #e4eefa;
 }
-
+#menu {
+  grid-column: 1 / span 2;
+  grid-row: 1;
+	background-color: #e4eefa;
+	font-size: 0px;
+	box-shadow: 0px 2px 5px #615f5f;
+}
+#songsList {
+  grid-column: 1;
+  grid-row: 2 / span 3;
+  display: block;
+  height: 100%;
+	background-color: #e4eefa;
+}
 #content {
 	grid-column: 2;
 	grid-row: 2;
@@ -25,12 +38,149 @@ li, select {
   padding: 50px;
   padding-top: 20px;
 }
-
 #songInfo {
 	grid-column: 2; grid-row: 3;
 	background-color: #e6e6e6;
   border-top: 1px solid gray;
 }
+/* ________________________________________GRID */
+
+/* MENU_________________________________________ */
+
+#playList {
+  float:left;
+	display: inline-block; outline: none;
+  text-align-last:center;
+  height: 40px;
+  margin: 15px;
+  width: 250px;
+	font-size: 17px;
+	padding: 10px;
+	text-align: center;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #eff2f5, #d5dde3);
+  /* background: #eff2f5; */
+  box-shadow: 6px 6px 12px #c2cad5,
+            -6px -6px 12px #ffffff;
+}
+#menuList {
+  display: block;
+  float: right;
+  vertical-align: middle;
+  margin: 10px;
+}
+/* _____________________________________________MENU */
+
+/* Neumorphism and buttons___________________ */
+
+.iconBTN {
+  display: inline-block;
+  height: 40px;
+  width: 40px;
+  text-align: center;
+  margin: 5px; margin-right: 30px;
+}
+.iconBTN i {
+  font-size: 20px;
+  padding: 10px;
+}
+.iconBTN li:hover {
+	background-color: #d5e644;
+	color: white;
+}
+.borderBox{
+  border-radius: 10px;
+  background: linear-gradient(145deg, #f4ffff, #cdd6e1);
+  box-shadow: 6px 6px 12px #c2cad5,
+            -6px -6px 12px #ffffff;
+}
+.borderBoxOn, .borderBox:hover {
+  border-radius: 10px;
+  background: linear-gradient(325deg, #f4ffff, #cdd6e1);
+  box-shadow: 3px 3px 5px #c2cad5,
+            -3px -3px 5px #ffffff;
+}
+.borderBoxOn:hover{
+  background: linear-gradient(325deg, #f4ffff, #cdd6e1);
+  box-shadow: 1px 1px 3px #c2cad5,
+            -1px -1px 3px #ffffff;
+}
+
+/* __________________________ Neumorphism and buttons */
+
+/* SONGS LIST_________________________________________ */
+
+.songsListTitle {
+  font-size: 15px;
+}
+.songsListArtist{
+  font-size: 10px;
+}
+.songsListText {
+  display: inline-block;
+}
+
+.playListSongBTN {
+  float: right;
+  display: inline-block;
+  height: 30px;
+  width: 30px;
+  text-align: center;
+  margin: 10px; margin-right: 30px;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #f4ffff, #cdd6e1);
+  box-shadow: 6px 6px 12px #c2cad5,
+            -6px -6px 12px #ffffff;
+}
+.playListSongBTN i {
+  font-size: 20px;
+  padding: 5px;
+  color: lightblue;
+}
+
+
+#playListSongs {
+	height: calc(100% - 45px); min-height: calc(100% - 45px); max-height: calc(100% - 45px);
+	padding-top: 10px; padding-bottom: 10px;
+}
+
+#playListSongs ul {
+	list-style-type: none;
+	height: 100%; max-height: 100%; min-height: 100%;
+	width: 100%;
+	overflow-y: scroll;
+	padding-top: 0px;
+	padding-top: 0px; padding-bottom: 0px;
+	margin: 0;
+}
+
+#playListSongs li {
+	display: block;
+	padding: 0px;
+  padding-left: 20px;
+  line-height: 25px;
+  width: 100%; min-width: 100%; max-width: 100%;
+	overflow-x: hidden;
+}
+
+#playListSongs li:hover {
+  cursor: pointer;
+	font-weight: bold;
+  background-color: #d5e644;
+}
+/* #playListSongs > li:hover:before {
+	content: " - ";
+	text-indent: -5px;
+} */
+.songListHr {
+  height: 2px; min-height: 2px;
+  width: 80%;
+  border-bottom: 3px solid #cdd6e1;
+}
+
+/* ____________________________________SONGS LIST */
+
+
 .songI {
   float: right;
   height: 100%; max-height: 100%; min-height: 100%;
@@ -42,65 +192,6 @@ li, select {
   font-size: 13px;
   border-right: 1px solid black;
   padding-right: 5px; padding-left: 5px;
-}
-
-/* MENU BAR */
-#menu {
-	position: fixed; top: 0; left: 0;
-  z-index: 100;
-	width: 100%;
-  height: 28px; min-height: 28px; max-height: 28px;
-	background-color: #97a906;
-	font-size: 0px;
-	box-shadow: 0px 2px 5px #615f5f;
-}
-#listBTN {
-  display: none;
-  background-color: inherit;
-  border-right: 1px solid black;
-}
-
-#listBTN:hover {
-  cursor: pointer;
-  background-color: #d5e644;
-}
-
-#foldMenuBTN {
-  display: none;
-  background-color: inherit;
-  float: right;
-  height: 28px; min-height: 28px; max-height: 28px;
-}
-
-#foldMenuBTN:hover {
-  background-color: #d5e644;
-}
-
-#foldMenuBTN img {
-  display: inline-block;
-  width: 35px;
-  height: 21px;
-  padding: 2px;
-}
-
-#menuList {
-  display: inline-block;
-  height: 28px; min-height: 28px; max-height: 28px;
-  float: right;
-}
-
-#menuList li {
-  display: block;
-  float: right;
-  font-size: 13px;
-  width: 110px;
-  border-left: 1px solid black;
-	padding: 6px; padding-right: 15px; padding-left: 15px;
-}
-
-#menuList li:hover {
-	background-color: #d5e644;
-	color: white;
 }
 
 .songTitle {
@@ -200,74 +291,9 @@ li, select {
 }
 
 /* PLAY LIST AND LIST SIDEBAR */
-#songsList {
-  display: block;
-	position: fixed; left: 0px; top: 28px; z-index: 11;
-	width: 300px; min-width: 300px; max-width: 300px;
-	height: calc(100% - 28px);
-	min-height: calc(100% - 28px);
-	max-height: calc(100% - 28px);
-	background-color: #f2ff85;
-	border: 1px solid black;
-	border-top: 0;
-}
 
-#playList {
-	display: block; outline: none;
-  text-align-last:center;
-	font-size: 20px;
-	padding: 10px;
-	width: 100%; min-width: 100%;
-	text-align: center;
-	border-bottom: 1px solid gray;
-	box-shadow: 0px 2px 5px gray;
-  background-color: #d5e644;
-}
-#playListSongs {
-	height: calc(100% - 45px); min-height: calc(100% - 45px); max-height: calc(100% - 45px);
-	padding-top: 10px; padding-bottom: 10px;
-}
 
-#playListSongs ul {
-	list-style-type: none;
-	height: 100%; max-height: 100%; min-height: 100%;
-	width: 100%;
-	overflow-y: scroll;
-	padding-top: 0px;
-	padding-top: 0px; padding-bottom: 0px;
-	margin: 0;
-}
 
-#playListSongs li {
-	display: block;
-	padding: 0px;
-  padding-left: 20px;
-  line-height: 25px;
-  width: 100%; min-width: 100%; max-width: 100%;
-	overflow-x: hidden;
-}
-
-#playListSongs li:hover {
-  cursor: pointer;
-	font-weight: bold;
-  background-color: #d5e644;
-}
-
-#fold {
-	display: block; outline: none;
-	position: fixed; top: calc((100% - 60px) / 2); z-index: 10;
-	min-height: 70px; width: 70px; min-width: 70px;
-	background-color: #bebebe;
-	border: 1px solid black; border-radius: 70px;
-	line-height: 70px;
-	text-align: right;
-	font-size: 20px; font-weight: bolt; padding-right: 10px;
-}
-
-#playListSongs > li:hover:before {
-	content: " - ";
-	text-indent: -5px;
-}
 
 ::-webkit-scrollbar {
   width: 8px;
@@ -290,9 +316,6 @@ li, select {
   #songInfo {
   }
   #songsList {
-    display: none;
-  }
-  #fold {
     display: none;
   }
   #foldMenuBTN {
