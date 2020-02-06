@@ -1,4 +1,12 @@
-var app = angular.module('songsApp', []);
+function hasSomeParentTheClass(element, classname) {
+  if(element.className !== undefined){
+    if(element.className.split(' ').indexOf(classname)>=0) return true;
+  }
+  if(element.parentNode === null){return false}
+  return element.parentNode && hasSomeParentTheClass(element.parentNode, classname);
+}
+
+var app = angular.module('songsApp', ['ngAnimate']);
 
 app.directive("paragraphs", function($compile) {
   return {
@@ -8,7 +16,7 @@ app.directive("paragraphs", function($compile) {
       parFold: "=",
     },
     template: '<div></div>',
-    replace: true,
+    replace: false,
     restrict: 'A',
     link: function(scope, element, attr) {
       scope.$watch("songObject", function(){
@@ -33,22 +41,36 @@ app.directive("paragraphs", function($compile) {
         HTMLstring += '</div>'
         element.empty()
         element.append(HTMLstring);
+        for(let i=0; i<element[0].children.length; i++){
+          if(element[0].children[i].children[1].attributes['ng-class'].value.length == 38){  // does the paragraph element contain chord? - false is longer then true
+            element[0].children[i].setAttribute('ng-class',"{'parContainerChords':!chordsOff}")
+          }
+        }
         $compile(element.contents())(scope);
       })
     }
   }
 })
 
-app.run(function($http, $rootScope, $compile){
+app.run(function($http, $rootScope, $compile, $window, $document){
   $rootScope.PlList   = null;
   $rootScope.LoadedSongs = new LoadedSongsList();
   $rootScope.currentSong = null;
   $rootScope.chordsOff = true;
   $rootScope.parFold = true;
   $rootScope.suggestionON = false;
-  $rootScope.songsListOn = true;
-  $rootScope.playlistsOn = false;
-  $rootScope.parRepeate = [];
+  $rootScope.menuOn = true;
+  $rootScope.tablet = $window.innerWidth < 1000;
+  $rootScope.mobile = $window.innerWidth < 800;
+  $rootScope.songsListOff = $rootScope.tablet ? true : false
+  $rootScope.playlistsOff = true;
+
+  angular.element($window).bind('resize', function(){
+    $rootScope.tablet = $window.innerWidth < 1000;
+    $rootScope.mobile = $window.innerWidth < 800;
+    $rootScope.$apply()
+  })
+
 
   // getPlaylists reach to server for playlists database and return promise
   $rootScope.getPlaylists = function(){
@@ -77,13 +99,25 @@ app.run(function($http, $rootScope, $compile){
   }
 })
 
-app.controller("songsCtrl", function($scope) {
+app.controller("songsCtrl", function($scope, $document) {
+
+  angular.element($document).bind('click', function(event){
+    let parentIsSideListBlock = hasSomeParentTheClass(event.target.parentNode, 'sideListBlock');
+    let parentIsMenu1 = hasSomeParentTheClass(event.target.parentNode, 'menuList1');
+
+    if(!parentIsSideListBlock && !parentIsMenu1 && $scope.tablet) {
+      $scope.songsListOff = true;
+      $scope.playlistsOff = true;
+    }
+    $scope.$apply()
+  })
   $scope.getPlaylists().then(function(){$scope.loadSongs();})
 
   // on change of select
-  $scope.selectPlaylist = function() {
-    $scope.PlList.ActivePL = $scope.PlList.find(pl => pl.id === $scope.PlList.ActiveID)
+  $scope.selectPlaylist = function(ID) {
+    $scope.PlList.ActivePL = $scope.PlList.find(pl => pl.id === ID)
     $scope.loadSongs();
+    $scope.playlistsOff = true
   }
 
   // function showSong change current song that is displayed in view
@@ -118,103 +152,40 @@ app.controller("songsCtrl", function($scope) {
     })
   }
 
-  $scope.showChords = function() {
-  // $scope.showChords = function() {
-    if($scope.chordsOff) {
-      $scope.chordsOff = false;
-    } else {
-      $scope.chordsOff = true;
+  // getNextSong/getSongBefore
+  $scope.nextSong = function(next) {
+    let currentSongId = ""
+    // find current song ID in all loaded songs
+    for(let song in $scope.LoadedSongs.songs){
+      if($scope.LoadedSongs.songs[song].Title === $scope.currentSong.Title) {
+        currentSongId = song
+        break;
+      }
+    }
+
+    // find next ID from current playlist (with indexes, ...)
+    let nSongs = $scope.PlList.ActivePL.songs.length;
+    let iCurrent = $scope.PlList.ActivePL.songs.findIndex(pl => pl.id === currentSongId)
+    let iNext = next ? 1+iCurrent : iCurrent-1
+    iNext = ((iNext % nSongs) + nSongs) % nSongs;
+
+    // set new current song
+    let nextID = $scope.PlList.ActivePL.songs[iNext].id
+    $scope.currentSong = $scope.LoadedSongs.songs[nextID]
+
+  }
+
+  $scope.songsBarToogle = function(button) {
+    $scope.songsListOff = !$scope.songsListOff
+    if(button && $scope.tablet && !$scope.playlistsOff){
+      $scope.playlistsOff = true
     }
   }
 
-  $scope.foldPar = function() {
-    if($scope.parFold) {
-      $scope.parFold = false;
-    } else {
-      $scope.parFold = true;
+  $scope.playlistBarToogle = function(button) {
+    $scope.playlistsOff = !$scope.playlistsOff
+    if(button && $scope.tablet && !$scope.songsListOff){
+      $scope.songsListOff = true
     }
   }
-
-  $scope.showSuggestion = function(){
-    if($scope.suggestionON) {
-      $scope.suggestionON = false;
-    } else {
-      $scope.suggestionON = true;
-    }
-  }
-  $scope.showSongs = function(){
-    if($scope.songsListOn) {
-      $scope.songsListOn = false;
-    } else {
-      $scope.songsListOn = true;
-    }
-  }
-  $scope.showPlaylists = function(){
-    if($scope.playlistsOn) {
-      $scope.playlistsOn = false;
-    } else {
-      $scope.playlistsOn = true;
-    }
-  }
-
 })
-
-window.onload = function() {
-  // // var songsList       = document.getElementById('songsList');
-  // var playlistSelect = document.getElementById("playList")
-  //
-  // // top bar BTNs
-  // var foldParBTN = document.getElementById("foldParBTN")
-  // var chordsOnBTN = document.getElementById("chordsOnBTN")
-  // foldParBTN.addEventListener("click", function(){currentSong.foldParToggle()})
-  // chordsOnBTN.addEventListener("click", function(){currentSong.chordsToggle()})
-  //
-  //
-  // playlistSelect.addEventListener("change", function() {
-  //   var value = playlistSelect.value
-  //   var text = playlistSelect.options[playlistSelect.selectedIndex].text
-  //   // give value and option text <option value="00001">text</option>
-  //   currentPlaylist = new ActivePlaylist(value, text, LSL, PLbar)
-  //
-  //   setTimeout(function(){
-  //     var ID = currentPlaylist.songsIDs[0]
-  //     currentSong.setSong(LSL.displaySong(ID))
-  //     // this time is here so currentPlaylist can load before I'll be loading informations from it
-  //   },200)
-  //
-  // })
-
-  // set newSongForm display none
-  // newSongFormToogle()
-
-  // set Cookie if not yet
-  // if (getCookie("chordsON") == "") {
-  //   setCookie("chordsON", true, 2)
-  // }
-  // if (getCookie("foldPar") == "") {
-  //   setCookie("foldPar", false, 2);
-  // }
-
-  // document.body.addEventListener("click", function(event) {
-  //   var menuBar = document.getElementById("menu")
-  //   var menuList = document.getElementById("menuList")
-  //   var foldMenuBTN = document.getElementById("foldMenuBTN")
-  //
-  //   if (menuBar.contains(event.target) || menuList.contains(event.target)) {
-  //       // clicked inside
-  //     // foldMenu(false)
-  //   } else {
-  //     foldMenu(true)
-  //   }
-  // })
-
-  // window.addEventListener("resize", function() {
-  //   var width = window.innerWidth
-  //   if (width > 800) {
-  //     foldMenu(true)
-  //   } else {
-  //     foldMenu(true)
-  //   }
-  // })
-
-}

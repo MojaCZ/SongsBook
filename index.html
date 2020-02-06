@@ -10,6 +10,7 @@
 </head>
 
 <script src="./SongsBook/files/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular-animate.js"></script>
 <script src="./SongsBook/files/library.js" charset="utf-8"></script>
 <!-- <script src="./SongsBook/files/playlist.js" charset="utf-8"></script> -->
 <script src="./SongsBook/files/song.js" charset="utf-8"></script>
@@ -17,66 +18,91 @@
 
 <body ng-app="songsApp" ng-controller="songsCtrl">
 	<div id="wrapper">
-  <!-- TOP MENU BAR -->
-	<div id="menu">
-		<!-- playlists -->
-		<select id="playList"
-			ng-model="PlList.ActiveID"
-			ng-change="selectPlaylist()">
-			<option ng-repeat="PL in PlList" ng-selected="selectedItem == PL" value="{{PL.id}}">{{PL.name}}</option>
-		</select>
-		<ul id="menuList">
-			<li class="iconBTN {{!songsListOn ? 'borderBox' : 'borderBoxOn'}}" ng-click="showSongs()"><i class="far fa-file-audio"></i></li>
-			<li class="iconBTN {{playlistsOn ? 'borderBox' : 'borderBoxOn'}}" ng-click="showPlaylists()"><i class="fas fa-compact-disc"></i></li>
-			<li class="iconBTN borderBox" ng-click="foldMenu()"><i class="fas fa-sliders-h"></i></li>
-			<li class="iconBTN borderBox" ng-click="showSuggestion()"><i class="fas fa-folder-plus"></i></li>
-			<li class="iconBTN {{chordsOff ? 'borderBox' : 'borderBoxOn'}}" ng-click="showChords()"><i class="fas fa-music"></i></li>
-			<li class="iconBTN {{parFold ? 'borderBox' : 'borderBoxOn'}}" ng-click="foldPar()"><i class="fas fa-paragraph"></i></li>
-		</ul>
-	</div>
-
-	<div id="transparentPage" ng-show="suggestionON"></div>
-
-
-  <!-- PLAY LISTS AND SONGS BAR -->
-  <div id="songsList">
-    <!-- songs -->
-    <div id="playListSongs" ng-show="songsListOn">
-      <ul>
-        <li ng-repeat="song in PlList.ActivePL.songs" ng-click="showSong(song.id)">
-					<div class="songListWrapper">
-						<div class="songsListText">
-							<div class="songsListTitle" ng-bind="song.name"></div>
-							<div class="songsListArtist" ng-bind="LoadedSongs.songs[song.id].Artist"></div>
-						</div>
-						<div class="playListSongBTN" ng-show="LoadedSongs.songs[song.id] == currentSong"><i class="fas fa-play-circle"></i></div>
-					</div>
-					<div class="songListHr"></div>
-				</li>
-      </ul>
-    </div>
-  </div>
-
-	<!-- SONG BAR -->
-
-    <div id="content">
-			<h1 class="songTitle">{{currentSong.Title}}</h1>
-			<div paragraphs chords-off="chordsOff" par-fold="parFold" song-object="currentSong"></div>
+	  <!-- TOP MENU BAR -->
+		<div id="menu">
+			<ul id="menuList1" class="menuList1">
+				<li class="iconBTN {{songsListOff ? 'borderBox' : 'borderBoxOn'}}" ng-click="songsBarToogle(true)" ng-hide="!tablet"><i class="far fa-file-audio"></i></li>
+				<li class="iconBTN {{playlistsOff ? 'borderBox' : 'borderBoxOn'}}" ng-click="playlistBarToogle(true)"><i class="fas fa-compact-disc"></i></li>
+				<li class="PlListMenu">{{PlList.ActivePL.name}}</li>
+			</ul>
+			<div class="songTitleBar {{!tablet ? 'songTitleBarDesktop':''}}" ng-hide="tablet">
+				<div class="iconBTN borderBox nextSongBTN" ng-click="nextSong(flase)"><i class="fas fa-angle-double-left"></i></div>
+				<div class="songHeaderMenu">
+					<h1 class="songTitleMenu">{{currentSong.Title}}</h1>
+					<h2 class="songArtistMenu">{{currentSong.Artist}}</h2>
+				</div>
+				<div class="iconBTN borderBox nextSongBTN" ng-click="nextSong(true)"><i class="fas fa-angle-double-right"></i></div>
+			</div>
+			<ul id="menuList2">
+				<li class="iconBTN {{menuOn ? 'borderBox' : 'borderBoxOn'}}" ng-click="menuOn=!menuOn"><i class="fas fa-sliders-h"></i></li>
+				<li class="iconBTN {{!suggestionON ? 'borderBox' : 'borderBoxOn'}}" ng-click="suggestionON=!suggestionON"><i class="fas fa-folder-plus"></i></li>
+				<li class="iconBTN {{chordsOff ? 'borderBox' : 'borderBoxOn'}}" ng-click="chordsOff=!chordsOff"><i class="fas fa-music"></i></li>
+				<li class="iconBTN {{parFold ? 'borderBox' : 'borderBoxOn'}}" ng-click="parFold=!parFold"><i class="fas fa-paragraph"></i></li>
+			</ul>
 		</div>
-    <div id="songInfo">
+		<div id="menuSpan"></div>
+
+		<div id="page">
+			<!-- PLAYLISTS BAR -->
+			<div class="playListBar sideListBlock" ng-hide="playlistsOff">
+				<div class="sideList">
+					<ul>
+						<li ng-repeat="PL in PlList" ng-click="selectPlaylist(PL.id)">{{PL.name}}</li>
+					</ul>
+				</div>
+			</div>
+
+		  <!-- SONGS BAR -->
+		  <div class="sideListBlock" ng-hide="songsListOff && tablet">
+		    <!-- songs -->
+		    <div class="sideList">
+		      <ul>
+		        <li ng-repeat="song in PlList.ActivePL.songs" ng-click="showSong(song.id); songsBarToogle()">
+							<div class="songListWrapper">
+								<div class="songsListText">
+									<div class="songsListTitle" ng-bind="song.name"></div>
+									<div class="songsListArtist" ng-bind="LoadedSongs.songs[song.id].Artist"></div>
+								</div>
+								<div class="playListSongBTN" ng-show="LoadedSongs.songs[song.id] == currentSong"><i class="fas fa-play-circle"></i></div>
+							</div>
+							<div class="songListHr"></div>
+						</li>
+		      </ul>
+		    </div>
+		  </div>
+
+			<!-- SONG BAR -->
+	    <div class="{{!songsListOff ? 'content' : 'content'}}">
+				<div class="songTitleBar {{tablet ? 'songTitleBarTablet':''}}" ng-hide="!tablet">
+					<div class="iconBTN borderBox nextSongBTN" ng-click="nextSong(false)"><i class="fas fa-angle-double-left"></i></div>
+					<div class="songHeaderMenu">
+						<h1 class="songTitleMenu">{{currentSong.Title}}</h1>
+						<h2 class="songArtistMenu">{{currentSong.Artist}}</h2>
+					</div>
+					<div class="iconBTN borderBox nextSongBTN" ng-click="nextSong(true)"><i class="fas fa-angle-double-right"></i></div>
+				</div>
+				<div paragraphs
+					chords-off="chordsOff"
+					par-fold="parFold"
+					song-object="currentSong"
+					class="songText"></div>
+			</div>
+		</div>
+		<div id="songInfoSpan"></div>
+		<div id="songInfo">
 			<ul class="songI">
-				<li>artist: {{currentSong.Artist}}</li>
 				<li>language: {{currentSong.Language}}</li>
 				<li>tempo: {{currentSong.Tempo}}</li>
 				<li>capo: {{currentSong.Capo}}</li>
 				<li>key: {{currentSong.Key}}</li>
 			</ul>
 		</div>
-  </div>
+	</div>
+	<div id="transparentPage" ng-show="suggestionON"></div>
 
   <!-- FORM FOR SUGGESTING NEW SONG, HIDDEN BY DEFAULT -->
   <form action="SongsBook/suggestNS" method="POST" ng-show="suggestionON" id="suggestNS">
-    <button type="button" ng-click="showSuggestion()">X</button>
+    <button type="button" ng-click="suggestionON=!suggestionON">X</button>
     <div> SUGGEST A NEW SONG </div>
     <input type="text" name="newSong" id="newSong" placeholder="New song name"  />
     <input type="submit" id="suggestBTN" />

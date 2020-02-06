@@ -1,8 +1,11 @@
 *{
-  box-sizing: border-box;
-  padding: 0;
   margin: 0;
-	border: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+}
+html, body{
+  height: 100%; min-height: 100%; max-height: 100%;
 }
 li, select {
   cursor: pointer;
@@ -10,38 +13,64 @@ li, select {
 
 /*GRID____________________________*/
 #wrapper {
-	display: grid;
-	grid-template-columns: 300px 1fr;
-	grid-template-rows: 70px 1fr 20px;
-	width: 100vw; height: 100vh;
+	display: block;
+  height: 100%; min-height: 100%; max-height: 100%;
+  height: 100%; min-width: 100%; max-width: 100%;
   background-color: #e4eefa;
 }
 #menu {
-  grid-column: 1 / span 2;
-  grid-row: 1;
-	background-color: #e4eefa;
-	font-size: 0px;
-	box-shadow: 0px 2px 5px #615f5f;
-}
-#songsList {
-  grid-column: 1;
-  grid-row: 2 / span 3;
   display: block;
-  height: 100%;
-	background-color: #e4eefa;
+  position: fixed;
+  text-align: center;
+  z-index: 200;
+  top: 0; left: 0;
+  height: 70px; width: 100%;
+	font-size: 0px;
+  background-color: #e4eefa;
 }
-#content {
-	grid-column: 2;
-	grid-row: 2;
-	background-color: #eef1ee;
-  overflow-y: scroll;
+#menuSpan {
+  display: block;
+  height: 70px; min-height: 70px;
+  width: 100%; min-width: 100%;
+}
+
+#page {
+  display: flex;
+  width: 100%; min-width: 100%;
+  height: calc(100% - 70px); min-height: calc(100% - 70px);
+  background-color: #e4eefa;
+}
+
+.playListBar {
+  z-index: 301 !important;
+}
+
+
+
+.content {
+  height: 100%; min-height: 100%; width: 100%;
+  overflow-y: hidden;
   padding: 50px;
   padding-top: 20px;
+  padding-left: 350px;
+  background-color: #e4eefa;
 }
+
 #songInfo {
-	grid-column: 2; grid-row: 3;
-	background-color: #e6e6e6;
+  display: block;
+	position: fixed;
+  z-index: 300;
+  width: 100%;
+  bottom: 0px;
+  left: 0px;
+  height: 20px;
+  background-color: green;
   border-top: 1px solid gray;
+}
+#songInfoSpan {
+  display: block;
+  width: 100%; min-width: 100%;
+  height: 20px;
 }
 /* ________________________________________GRID */
 
@@ -63,11 +92,16 @@ li, select {
   box-shadow: 6px 6px 12px #c2cad5,
             -6px -6px 12px #ffffff;
 }
-#menuList {
-  display: block;
+#menuList2, #menuList1 {
+  display: inline-block;
   float: right;
   vertical-align: middle;
   margin: 10px;
+}
+#menuList1{float: left;}
+.PlListMenu{
+    font-size: 20px;
+    display: inline-block;
 }
 /* _____________________________________________MENU */
 
@@ -139,39 +173,58 @@ li, select {
 }
 
 
-#playListSongs {
-	height: calc(100% - 45px); min-height: calc(100% - 45px); max-height: calc(100% - 45px);
-	padding-top: 10px; padding-bottom: 10px;
+
+.sideListBlock {
+  width: 300px; min-width: 300px;
+  height: calc(100% - 45px); min-height: calc(100% - 45px); max-height: calc(100% - 45px);
+  position: fixed;
+  top:70px;
+  left: 0;
+  z-index: 200;
+  background-color: #e4eefa;
+  padding-top: 0; padding-bottom: 50px;
+  -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+  -moz-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+  -o-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+  transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+
+  overflow: scroll;
+  direction: rtl;
+}
+.sideListBlock.ng-hide {
+  left: -300px;
 }
 
-#playListSongs ul {
+.sideList {
+direction: ltr;
+}
+
+.sideList ul {
 	list-style-type: none;
 	height: 100%; max-height: 100%; min-height: 100%;
 	width: 100%;
-	overflow-y: scroll;
 	padding-top: 0px;
-	padding-top: 0px; padding-bottom: 0px;
+	padding-top: 10px; padding-bottom: 0px;
 	margin: 0;
 }
 
-#playListSongs li {
+.sideList li {
+  float: left;
 	display: block;
 	padding: 0px;
   padding-left: 20px;
   line-height: 25px;
   width: 100%; min-width: 100%; max-width: 100%;
 	overflow-x: hidden;
+
 }
 
-#playListSongs li:hover {
+.sideList li:hover {
   cursor: pointer;
 	font-weight: bold;
   background-color: #d5e644;
 }
-/* #playListSongs > li:hover:before {
-	content: " - ";
-	text-indent: -5px;
-} */
+
 .songListHr {
   height: 2px; min-height: 2px;
   width: 80%;
@@ -194,10 +247,59 @@ li, select {
   padding-right: 5px; padding-left: 5px;
 }
 
-.songTitle {
+.songTitle{
   display: block;
   font-size: 25px;
-  padding-bottom: 20px;
+  margin-bottom: 5px;
+}
+.songArtist {
+  font-size: 12px;
+  font-style: italic;
+  margin-bottom: 10px;
+}
+
+.songHeaderMenu {
+  display: inline-block;
+  position: relative;
+  height: 100%; width: fit-content;
+  text-align: center;
+  margin-left: 40px; margin-right: 40px;
+}
+.songTitleMenu {
+  display: block;
+  font-size: 25px;
+  padding-top: 15px;
+  margin-bottom: 5px;
+}
+.songArtistMenu {
+  font-size: 12px;
+  font-style: italic;
+  margin-bottom: 10px;
+}
+.nextSongBTN{
+  position: relative;
+  top: -15px;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+.songTitleBar{
+  width: auto;
+}
+.songTitleBarTablet{
+  display: block;
+}
+.songTitleBarDesktop{
+  display: inline-block;
+}
+
+.songText {
+  -webkit-columns: 2;
+    -moz-columns: 2;
+      columns: 2;
+  -moz-column-fill: auto;
+    column-fill: auto;
+    height: 100%;
+    overflow: scroll;
 }
 
 .parName {
@@ -214,6 +316,9 @@ li, select {
 .parContainer {
   display: block;
   margin-bottom: 20px;
+}
+.parContainerChords {
+  padding-top: 20px;
 }
 
 .paragraphsSpace {
@@ -252,7 +357,6 @@ li, select {
   border: 1px solid black;
   margin-left: auto;
 }
-
 #suggestNS input, #suggestNS div {
   display: block;
   padding: 10px;
@@ -263,12 +367,10 @@ li, select {
   border: 1px solid black;
   box-shadow: 0px 1px 2px #615f5f;
 }
-
 #suggestBTN:hover {
   background-color: gray;
   color: white;
 }
-
 #suggestNS div {
   font-size: 18px;
   margin-top: 0px;
@@ -276,7 +378,6 @@ li, select {
   border: 0px;
   box-shadow: 0px 0px 0px #615f5f;
 }
-
 #transparentPage {
   display: block;
   position: fixed;
@@ -291,10 +392,6 @@ li, select {
 }
 
 /* PLAY LIST AND LIST SIDEBAR */
-
-
-
-
 ::-webkit-scrollbar {
   width: 8px;
   height: 12px;
@@ -306,28 +403,58 @@ li, select {
   background: rgba(0, 0, 0, 0.5);
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1000px) {
   #wrapper {
-    grid-template-columns: 0px 1fr;
-    grid-template-rows: 28px 1fr 20px;
   }
-  #content {
+  #menu {
+  }
+  .menuSpan {
+    display: none;
+  }
+
+  .songsList {
+    position: absolute;
+    width: 300px;
+    top: 70px; left: 0px;
+  }
+
+  .content {
+    padding: 0px;
+  }
+
+  .contentOnSongsOn {
+    /* grid-column: 1 */
+  }
+  .contentOnSongsOff {
   }
   #songInfo {
   }
-  #songsList {
+  #playList {
     display: none;
   }
-  #foldMenuBTN {
-    display: inline-block;
+
+  .borderBox:hover {
+    border-radius: 10px;
+    background: linear-gradient(145deg, #f4ffff, #cdd6e1);
+    box-shadow: 6px 6px 12px #c2cad5,
+              -6px -6px 12px #ffffff;
   }
-  #listBTN {
-    display: inline-block;
-    float: left;
-    font-size: 15px;
-    padding: 5px; padding-right: 15px; padding-left: 15px;
+  .borderBoxOn:hover{
+    border-radius: 10px;
+    background: linear-gradient(325deg, #f4ffff, #cdd6e1);
+    box-shadow: 3px 3px 5px #c2cad5,
+              -3px -3px 5px #ffffff;
   }
-  #menuList {
+
+
+  .songText {
+    -webkit-columns: 1;
+      -moz-columns: 1;
+        columns: 1;
+    display: block;
+    overflow: scroll;
+  }
+  /* #menuList {
     z-index: 150;
     height: auto; min-height: auto; max-height: none;
     position: fixed;
@@ -338,13 +465,13 @@ li, select {
     border-bottom: 1px solid black; border-left: 1px solid black;
     box-shadow: 0px 2px 5px #615f5f;
     background-color: #f2ff85;
-  }
-  #menuList li {
+  } */
+  /* #menuList li {
     width: 100%;
     display: block;
     float: none;
     border: 0;
-  }
+  } */
 
   #suggestNS {
     top: 28px; left: 0;
@@ -355,7 +482,7 @@ li, select {
 }
 
 @media screen and (max-width: 420px) {
-  #songsList {
+  /* #songsList {
     width: 100%; min-width: 100%; max-width: 100%;
-  }
+  } */
 }
