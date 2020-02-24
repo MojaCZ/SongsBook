@@ -23,7 +23,7 @@
 			<ul id="menuList1" class="menuList1">
 				<li class="iconBTN {{songsListOff ? 'borderBox' : 'borderBoxOn'}}" ng-click="songsBarToogle(true)" ng-hide="!tablet"><i class="far fa-file-audio"></i></li>
 				<li class="iconBTN {{playlistsOff ? 'borderBox' : 'borderBoxOn'}}" ng-click="playlistBarToogle(true)"><i class="fas fa-compact-disc"></i></li>
-				<li class="PlListMenu">{{PlList.ActivePL.name}}</li>
+				<li class="PlListMenu" ng-hide="mobile">{{PlList.ActivePL.name}}</li>
 			</ul>
 			<div class="songTitleBar {{!tablet ? 'songTitleBarDesktop':''}}" ng-hide="tablet">
 				<div class="iconBTN borderBox nextSongBTN" ng-click="nextSong(flase)"><i class="fas fa-angle-double-left"></i></div>
@@ -34,7 +34,7 @@
 				<div class="iconBTN borderBox nextSongBTN" ng-click="nextSong(true)"><i class="fas fa-angle-double-right"></i></div>
 			</div>
 			<ul id="menuList2">
-				<li class="iconBTN {{menuOn ? 'borderBox' : 'borderBoxOn'}}" ng-click="menuOn=!menuOn"><i class="fas fa-sliders-h"></i></li>
+				<li class="iconBTN {{menuOn ? 'borderBox' : 'borderBoxOn'}}" ng-hide="mobile" ng-click="menuOn=!menuOn"><i class="fas fa-sliders-h"></i></li>
 				<li class="iconBTN {{!suggestionON ? 'borderBox' : 'borderBoxOn'}}" ng-click="suggestionON=!suggestionON"><i class="fas fa-folder-plus"></i></li>
 				<li class="iconBTN {{chordsOff ? 'borderBox' : 'borderBoxOn'}}" ng-click="chordsOff=!chordsOff"><i class="fas fa-music"></i></li>
 				<li class="iconBTN {{parFold ? 'borderBox' : 'borderBoxOn'}}" ng-click="parFold=!parFold"><i class="fas fa-paragraph"></i></li>
