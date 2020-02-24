@@ -14,7 +14,7 @@ li, select {
 /*GRID____________________________*/
 #wrapper {
 	display: block;
-  height: 100%; min-height: 100%; max-height: 100%;
+  height: calc(100% - 20px); min-height: calc(100% - 20px); max-height: calc(100% - 20px);
   height: 100%; min-width: 100%; max-width: 100%;
   background-color: #e4eefa;
 }
@@ -22,7 +22,7 @@ li, select {
   display: block;
   position: fixed;
   text-align: center;
-  z-index: 200;
+  z-index: 100;
   top: 0; left: 0;
   height: 70px; width: 100%;
 	font-size: 0px;
@@ -50,9 +50,7 @@ li, select {
 .content {
   height: 100%; min-height: 100%; width: 100%;
   overflow-y: hidden;
-  padding: 50px;
-  padding-top: 20px;
-  padding-left: 350px;
+  padding: 20px 0px 0px 350px;
   background-color: #e4eefa;
 }
 
@@ -64,8 +62,7 @@ li, select {
   bottom: 0px;
   left: 0px;
   height: 20px;
-  background-color: green;
-  border-top: 1px solid gray;
+  background-color: #e4eefa;
 }
 #songInfoSpan {
   display: block;
@@ -182,7 +179,7 @@ li, select {
   left: 0;
   z-index: 200;
   background-color: #e4eefa;
-  padding-top: 0; padding-bottom: 50px;
+  padding-top: 8px; padding-bottom: 50px;
   -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
   -moz-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
   -o-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
@@ -240,10 +237,10 @@ direction: ltr;
 }
 .songI li {
   display: inline-block;
+  margin-right: 15px;
   float: right;
   height: 100%; max-height: 100%; min-height: 100%;
   font-size: 13px;
-  border-right: 1px solid black;
   padding-right: 5px; padding-left: 5px;
 }
 
@@ -378,13 +375,13 @@ direction: ltr;
   border: 0px;
   box-shadow: 0px 0px 0px #615f5f;
 }
-#transparentPage {
-  display: block;
+.transparentPage {
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1000;
-  background-color: white;
+  z-index: 150;
+  background-color: gray;
   opacity: 0.5;
   height: 100%; min-height: 100%;
   width: 100%; min-width: 100%;
@@ -411,15 +408,24 @@ direction: ltr;
   .menuSpan {
     display: none;
   }
+  .content{
+    margin-left: 50px;
+    padding: 0;
+  }
 
   .songsList {
     position: absolute;
     width: 300px;
     top: 70px; left: 0px;
   }
-
-  .content {
-    padding: 0px;
+  .sideListBlock {
+    top: 10px;
+    left: 10px;
+    border-radius: 5px;
+    overflow-x: hidden;
+  }
+  .transparentPage {
+    display: block;
   }
 
   .contentOnSongsOn {
@@ -445,8 +451,6 @@ direction: ltr;
     box-shadow: 3px 3px 5px #c2cad5,
               -3px -3px 5px #ffffff;
   }
-
-
   .songText {
     -webkit-columns: 1;
       -moz-columns: 1;
@@ -454,24 +458,6 @@ direction: ltr;
     display: block;
     overflow: scroll;
   }
-  /* #menuList {
-    z-index: 150;
-    height: auto; min-height: auto; max-height: none;
-    position: fixed;
-    right: 0px;
-    width: 150px;
-    top: 28px;
-    display: none;
-    border-bottom: 1px solid black; border-left: 1px solid black;
-    box-shadow: 0px 2px 5px #615f5f;
-    background-color: #f2ff85;
-  } */
-  /* #menuList li {
-    width: 100%;
-    display: block;
-    float: none;
-    border: 0;
-  } */
 
   #suggestNS {
     top: 28px; left: 0;

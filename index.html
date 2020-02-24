@@ -43,7 +43,10 @@
 		<div id="menuSpan"></div>
 
 		<div id="page">
+
+
 			<!-- PLAYLISTS BAR -->
+			<div class="transparentPage" ng-hide="playlistsOff"></div>
 			<div class="playListBar sideListBlock" ng-hide="playlistsOff">
 				<div class="sideList">
 					<ul>
@@ -53,6 +56,7 @@
 			</div>
 
 		  <!-- SONGS BAR -->
+			<div class="transparentPage" ng-hide="songsListOff && tablet"></div>
 		  <div class="sideListBlock" ng-hide="songsListOff && tablet">
 		    <!-- songs -->
 		    <div class="sideList">
@@ -98,7 +102,7 @@
 			</ul>
 		</div>
 	</div>
-	<div id="transparentPage" ng-show="suggestionON"></div>
+	<div class="transparentPage" ng-show="suggestionON"></div>
 
   <!-- FORM FOR SUGGESTING NEW SONG, HIDDEN BY DEFAULT -->
   <form action="SongsBook/suggestNS" method="POST" ng-show="suggestionON" id="suggestNS">
