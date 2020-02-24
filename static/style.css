@@ -284,6 +284,7 @@ direction: ltr;
 }
 .songTitleBar{
   width: auto;
+  flex-direction: column;
 }
 .songTitleBarTablet{
   display: block;
@@ -430,6 +431,12 @@ direction: ltr;
   .transparentPage {
     display: block;
   }
+  .songTitleMenu{
+    font-size: 18px;
+  }
+  .songArtistMenu{
+    font-size: 10px;
+  }
 
   .contentOnSongsOn {
     /* grid-column: 1 */
@@ -455,11 +462,19 @@ direction: ltr;
               -3px -3px 5px #ffffff;
   }
   .songText {
-    -webkit-columns: 1;
-      -moz-columns: 1;
-        columns: 1;
+    height: calc(100% - 77px);
+    /* max-height: calc(100%-90px); */
+    -webkit-columns: auto;
+      -moz-columns: auto;
+        columns: auto;
     display: block;
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    font-size: 12px;
+    /* margin-bottom: 30px; */
+  }
+  .chords{
+    font-size: 12px;
   }
 
   #suggestNS {
@@ -471,7 +486,4 @@ direction: ltr;
 }
 
 @media screen and (max-width: 420px) {
-  /* #songsList {
-    width: 100%; min-width: 100%; max-width: 100%;
-  } */
 }
