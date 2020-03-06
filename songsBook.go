@@ -74,8 +74,8 @@ func playlistsJSON(w http.ResponseWriter, req *http.Request) {
 	PL_JSON += "{\"id\": \"99997\", \"name\":\"CZ ALL\", \"songs\":" + songsJSON_CZ + "},"
 
 	// load EN
-	PEN := playlist.NewPlaylist("PlaylistCZ")
-	err = PEN.LoadByHeader("language", "CZ")
+	PEN := playlist.NewPlaylist("PlaylistEN")
+	err = PEN.LoadByHeader("language", "EN")
 	if err != nil { log.Println(err) }
 	songsJSON_EN, err := PEN.JSONPlaylistSongs()
 	if err != nil { log.Println(err) }
